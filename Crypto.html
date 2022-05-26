@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRYPTO</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 10px;
+      font-family: "Times New Roman", Times, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .Contain {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    p {
+      text-align: center;
+      color: black;
+      font-size: 2rem;
+      margin-top: 5px;
+      line-height: 2.5rem;
+      font-weight: 300;
+      letter-spacing: 0.05rem;
+    }
+
+    .Section-Title {
+      font-size: 4rem;
+      font-weight: 300;
+      color: black;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;
+      text-align: center;
+    }
+
+    .Section-Title span {
+      color: #fd00da;
+    }
+
+    .CTA {
+      display: inline-block;
+      padding: 10px 30px;
+      color: white;
+      background-color: transparent;
+      border: 2px solid #fd00da;
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      margin-top: 30px;
+      transition: 0.3s ease;
+      transition-property: background-color, color;
+    }
+
+    .CTA:hover {
+      color: white;
+      background-color: #fd00da;
+    }
+
+    .Brand h1 {
+      font-size: 3rem;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    .Brand h1 span {
+      color: #fd00da;
+    }
+
+    /* Header section */
+    #Header {
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: auto;
+    }
+
+    #Header .Header {
+      min-height: 8vh;
+      background-color: rgba(31, 30, 30, 0.24);
+      transition: 0.3s ease background-color;
+    }
+
+    #Header .Nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      height: 100%;
+      max-width: 1300px;
+      padding: 0 10px;
+    }
+
+    #Header .Nav-list ul {
+      list-style: none;
+      position: absolute;
+      background-color: rgb(31, 30, 30);
+      width: 100vw;
+      height: 100vh;
+      left: 100%;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      overflow-x: hidden;
+      transition: 0.5s ease left;
+    }
+
+    #Header .Nav-list ul.active {
+      left: 0%;
+    }
+
+    #Header .Nav-list ul a {
+      font-size: 2.5rem;
+      font-weight: 500;
+      letter-spacing: 0.2rem;
+      text-decoration: none;
+      color: white;
+      text-transform: uppercase;
+      padding: 20px;
+      display: block;
+    }
+
+    #Header .Nav-list ul a::after {
+      content: attr(data-after);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      color: rgba(240, 248, 255, 0.021);
+      font-size: 13rem;
+      letter-spacing: 50px;
+      z-index: -1;
+      transition: 0.3s ease letter-spacing;
+    }
+
+    #Header .Nav-list ul li:hover a::after {
+      transform: translate(-50%, -50%) scale(1);
+      letter-spacing: initial;
+    }
+
+    #Header .Nav-list ul li:hover a {
+      color: #fd00da;
+    }
+
+    #Header .Menu {
+      height: 60px;
+      width: 60px;
+      display: inline-block;
+      border: 3px solid white;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      cursor: pointer;
+      transform: scale(0.8);
+      margin-right: 20px;
+    }
+
+    #Header .Menu:after {
+      position: absolute;
+      content: "";
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      border: 3px solid white;
+      animation: Menu_pulse 1s ease infinite;
+    }
+
+    #Header .Menu .Bar {
+      height: 2px;
+      width: 30px;
+      position: relative;
+      background-color: white;
+      z-index: -1;
+    }
+
+    #Header .Menu .Bar::after,
+    #Header .Menu .Bar::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      background-color: white;
+      transition: 0.3s ease;
+      transition-property: top, bottom;
+    }
+
+    #Header .Menu .Bar::after {
+      top: 8px;
+    }
+
+    #Header .Menu .Bar::before {
+      bottom: 8px;
+    }
+
+    #Header .Menu.active .Bar::before {
+      bottom: 0;
+    }
+
+    #Header .Menu.active .Bar::after {
+      top: 0;
+    }
+
+    /* End Header section */
+    /* Main Section */
+    #Main {
+      background-image: url(./main.png);
+      background-size: cover;
+      background-position: top center;
+      position: relative;
+      z-index: 1;
+    }
+
+    #Main::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-color: black;
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    #Main h1 {
+      display: block;
+      width: fit-content;
+      font-size: 4rem;
+      position: relative;
+      color: transparent;
+      animation: text_reveal 0.5s ease forwards;
+      animation-delay: 1s;
+    }
+
+    #Main h1:nth-child(1) {
+      animation-delay: 1s;
+    }
+
+    #Main h1:nth-child(2) {
+      animation-delay: 2s;
+    }
+
+    #Main h1:nth-child(3) {
+      animation: text_reveal_name 0.5s ease forwards;
+      animation-delay: 3s;
+    }
+
+    #Main h1 span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0;
+      background-color: #fd00da;
+      animation: text_reveal_box 1s ease;
+      animation-delay: 1s;
+    }
+
+    #Main h1:nth-child(1) span {
+      animation-delay: 0.5s;
+    }
+
+    #Main h1:nth-child(2) span {
+      animation-delay: 1.5s;
+    }
+
+    #Main h1:nth-child(3) span {
+      animation-delay: 2.5s;
+    }
+
+    #Main .Main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 50px;
+      justify-content: flex-start;
+    }
+
+    /* End Main Section */
+    /* Services Section */
+    #Services .Services {
+      flex-direction: column;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 100px 0;
+    }
+
+    #Services .Service-Top {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    #Services .Section-Title {
+      font-size: 4rem;
+      font-weight: 300;
+      color: black;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;
+      text-align: center;
+    }
+
+    #Services .Section-Title span {
+      color: #fd00da;
+    }
+
+    #Services .Service-Bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 50px;
+    }
+
+    #Services .Service-Item {
+      flex-basis: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 30px;
+      border-radius: 10px;
+      background-image: url(./service.jpg);
+      background-size: cover;
+      margin: 10px 5%;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    #Services .Service-Item::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    #Services .Service-Bottom .icon {
+      height: 80px;
+      width: 80px;
+      margin-bottom: 20px;
+    }
+
+    #Services .Service-Item h2 {
+      font-size: 2rem;
+      color: white;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    #Services .Service-Item p {
+      color: white;
+    }
+
+    /* End Services Section */
+    /* About Section */
+    #About .About {
+      flex-direction: column-reverse;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 100px 20px;
+    }
+
+    #About .About-left {
+      width: 250px;
+      height: 360px;
+    }
+
+    #About .About-right {
+      width: 100%;
+    }
+
+    #About .About-right h2 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      letter-spacing: 0.2rem;
+      margin-bottom: 10px;
+    }
+
+    #About .About-right p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #About .About-right .CTA {
+      color: black;
+      margin-bottom: 50px;
+      padding: 10px 20px;
+      font-size: 2rem;
+    }
+
+    #About .About-left .About-img {
+      height: 100%;
+      width: 100%;
+      position: relative;
+      border: 10px solid white;
+    }
+
+    #About .About-left .About-img::after {
+      content: "";
+      position: absolute;
+      left: -33px;
+      top: 19px;
+      height: 98%;
+      width: 98%;
+      border: 7px solid #fd00da;
+      z-index: -1;
+    }
+
+    /* End About Section */
+    /* Contact Section */
+    #Contact .Contact {
+      flex-direction: column;
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 90%;
+    }
+
+    #Contact .Contact-Items {
+      padding-left: 15px;
+      width: 400px;
+    }
+
+    #Contact .Contact-Item {
+      width: 80%;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      padding: 30px;
+      margin: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      box-shadow: 0px 0px 18px 0 #0000002c;
+      transition: 0.3s ease box-shadow;
+    }
+
+    #Contact .Contact-Item:hover {
+      box-shadow: 0px 0px 5px 0 #0000002c;
+    }
+
+    #Contact .icon {
+      width: 70px;
+      margin: 0 auto;
+      margin-bottom: 10px;
+    }
+
+    #Contact .Contact-Info h1 {
+      font-size: 2.5rem;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    #Contact .Contact-Info h2 {
+      font-size: 1.3rem;
+      line-height: 2rem;
+      font-weight: 500;
+    }
+
+    /*End Contact Section */
+    /* Footer Section */
+    #Footer {
+      background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    }
+
+    #Footer .Footer {
+      min-height: 200px;
+      flex-direction: column;
+      padding-top: 50px;
+      padding-bottom: 10px;
+    }
+
+    #Footer h2 {
+      color: white;
+      font-weight: 500;
+      font-size: 1.8rem;
+      letter-spacing: 0.1rem;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    #Footer .Social-icon {
+      display: flex;
+      margin-bottom: 30px;
+    }
+
+    #Footer .Social-Item {
+      height: 50px;
+      width: 50px;
+      margin: 0 5px;
+    }
+
+    #Footer .Social-Item img {
+      filter: grayscale(1);
+      transition: 0.3s ease filter;
+    }
+
+    #Footer .Social-Item:hover img {
+      filter: grayscale(0);
+    }
+
+    #Footer p {
+      color: white;
+      font-size: 1.3rem;
+    }
+
+    /* End Footer Section */
+
+    /* Key Frames */
+    @keyframes text_reveal_box {
+      50% {
+        width: 100%;
+        left: 0;
+      }
+
+      100% {
+        width: 0;
+        left: 100%;
+      }
+    }
+
+    @keyframes text_reveal {
+      100% {
+        color: white;
+      }
+    }
+
+    @keyframes text_reveal_name {
+      100% {
+        color: #fd00da;
+        font-weight: 500;
+      }
+    }
+
+    @keyframes Menu_pulse {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.4);
+      }
+    }
+
+    /* End Key Frames */
+    /* Media Query For Tablet */
+    @media only screen and (min-width: 768px) {
+      .CTA {
+        font-size: 2.5rem;
+        padding: 20px 60px;
+      }
+
+      h1.Section-Title {
+        font-size: 6rem;
+      }
+
+      /* Main */
+      #Main h1 {
+        font-size: 7rem;
+      }
+
+      /* End Main */
+
+      /* Services Section */
+      #Services .Service-Bottom .Service-Item {
+        flex-basis: 45%;
+        margin: 2.5%;
+      }
+
+      /* End Services Section */
+
+      /* About */
+      #About .About {
+        flex-direction: row;
+      }
+
+      #About .About-left {
+        width: 600px;
+        height: 400px;
+        padding-left: 60px;
+      }
+
+      #About .About .About-left .About-img::after {
+        left: -45px;
+        top: 34px;
+        height: 98%;
+        width: 98%;
+        border: 10px solid #fd00da;
+      }
+
+      #About .About-right {
+        text-align: left;
+        padding: 30px;
+      }
+
+      #About .About-right p {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+
+      #About .About-right h1 {
+        text-align: left;
+      }
+
+      /* End About */
+
+      /* Contact Section */
+      #Contact .Contact {
+        flex-direction: column;
+        padding: 100px 0;
+        align-items: center;
+        justify-content: center;
+        min-width: 20vh;
+      }
+
+      #Contact .Contact-Items {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin: 0;
+      }
+
+      #Contact .Contact-Item {
+        width: 30%;
+        margin: 0;
+        flex-direction: row;
+      }
+
+      #Contact .Contact-Item .icon {
+        height: 100px;
+        width: 100px;
+      }
+
+      #Contact .Contact-Item .icon img {
+        object-fit: contain;
+      }
+
+      #Contact .Contact-Item .Contact-Info {
+        width: 100%;
+        text-align: left;
+        padding-left: 20px;
+      }
+
+      /* End Contact Section */
+    }
+
+    /* End Media Query For Tablet */
+    /* Media Query For Desktop */
+    @media only screen and (min-width: 1200px) {
+
+      /* Header Section */
+      #Header .Menu {
+        display: none;
+      }
+
+      #Header .Nav-list ul {
+        position: initial;
+        display: block;
+        height: auto;
+        width: fit-content;
+        background-color: transparent;
+      }
+
+      #Header .Nav-list ul li {
+        display: inline-block;
+      }
+
+      #Header .Nav-list ul li a {
+        font-size: 1.8rem;
+      }
+
+      #Header .Nav-list ul a:after {
+        display: none;
+      }
+
+      /* End Header Section */
+      #Services .Service-Bottom .Service-Item {
+        flex-basis: 22%;
+        margin: 1.5%;
+      }
+
+      #About .About-right p {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+    }
+
+    /* End  Media Query For Desktop */
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <section id="Header">
+    <div class="Header Contain">
+      <div class="Nav-bar">
+        <div class="Brand">
+          <a href="#Main">
+            <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Crypto</span></h1>
+          </a>
+        </div>
+        <div class="Nav-list">
+          <div class="Menu">
+            <div class="Bar"></div>
+          </div>
+          <ul>
+            <li><a href="#Main" data-after="Home">Home</a></li>
+            <li><a href="#Services" data-after="Service">Services</a></li>
+            <li><a href="#About" data-after="About">About</a></li>
+            <li><a href="#Contact" data-after="Contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Header -->
+  <!-- Main Section -->
+  <section id="Main">
+    <div class="Main Contain">
+      <div>
+        <h1>The Future <span></span></h1>
+        <h1>Of Money Is Here <span></span></h1>
+        <h1>CRYPTO <span></span></h1>
+        <a href="#Services" type="Btn" class="CTA">Learn More</a>
+      </div>
+    </div>
+  </section>
+  <!-- End Main Section -->
+
+  <!-- Service Section -->
+  <section id="Services">
+    <div class="Services Contain">
+      <div class="Service-Top">
+        <h1 class="Section-Title">Serv<span>i</span>ces</h1>
+        <p>
+          At CRYPTO our Mission is to Help everyone involved in The Crypto
+          Space to Maximize their Ability to Trade & Invest confidently.
+          CRYPTO is proud to present Educational Training & Trade Alert
+          Programs to assist you in achieving Financial Freedom.
+        </p>
+      </div>
+      <div class="Service-Bottom">
+        <div class="Service-Item">
+          <div class="icon">
+            <img src="https://img.icons8.com/bubbles/50/000000/filled-star.png" />
+          </div>
+          <h2>Hold Club</h2>
+          <p>
+            Discord Server For Holders.<br />Bear Market Portfolio
+            Creation.<br />Stay Up To Date On Parabolic Move.<br />Know When
+            To Add/Remove Crypto.
+          </p>
+        </div>
+        <div class="Service-Item">
+          <div class="icon">
+            <img src="https://img.icons8.com/bubbles/50/000000/filled-star.png" />
+          </div>
+          <h2>Trading Course</h2>
+          <p>
+            Basic Charting.<br />How To Use Price Action & Find Trade
+            Setups.<br />Risk Management And Stop Losses.<br />Access To
+            Exclusive Discord Server.
+          </p>
+        </div>
+        <div class="Service-Item">
+          <div class="icon">
+            <img src="https://img.icons8.com/bubbles/50/000000/filled-star.png" />
+          </div>
+          <h2>Trading Alerts</h2>
+          <p>
+            Instant Trade Setups.<br />Entry And Exit Target Alerts.<br />Stop/Risk
+            Management Suggestions.<br />24/7 Support Help On Discord.
+          </p>
+        </div>
+        <div class="Service-Item">
+          <div class="icon">
+            <img src="https://img.icons8.com/bubbles/50/000000/filled-star.png" />
+          </div>
+          <h2>Trading Alerts Pro</h2>
+          <p>
+            Everything From Trading Alerts.<br />Exclusive Discord
+            Community.<br />In-Depth Analysis On Trade Alerts.<br />More
+            Aggressive Entry Options.<br />Admin Available
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Service Section -->
+
+  <!-- About Section -->
+  <section id="About">
+    <div class="About Contain">
+      <div class="About-left">
+        <div class="About-img">
+          <img src="./pgupta.jpg" alt="img" />
+        </div>
+      </div>
+      <div class="About-right">
+        <h1 class="Section-Title">About <span>me</span></h1>
+        <h2>ADMIN</h2>
+        <p>
+          <b>STUDENT</b> at<br />Pillai College of<br />Arts, Commerce &
+          Science<br /><br /><b>PURSUING</b> degree<br />B.Sc. CS
+        </p>
+        <a href="#" class="CTA">Download Resume</a>
+      </div>
+    </div>
+  </section>
+  <!-- End About Section -->
+
+  <!-- Contact Section -->
+  <section id="Contact">
+    <div class="Contact Contain">
+      <div>
+        <h1 class="Section-Title">Contact <span>info</span></h1>
+      </div>
+      <div class="Contact-Items">
+        <div class="Contact-Item">
+          <div class="icon">
+            <img src="https://img.icons8.com/bubbles/100/000000/phone.png" />
+          </div>
+          <div class="Contact-Info">
+            <h1>Phone</h1>
+            <h2>+91 788 744 7662</h2>
+          </div>
+        </div>
+        <div class="Contact-Item">
+          <div class="icon">
+            <img src="https://img.icons8.com/bubbles/100/000000/new-post.png" />
+          </div>
+          <div class="Contact-Info">
+            <h1>Email</h1>
+            <h2>pguptaj20cs<br />@student.mes.ac.in</h2>
+          </div>
+        </div>
+        <div class="Contact-Item">
+          <div class="icon">
+            <img src="https://img.icons8.com/bubbles/100/000000/map-marker.png" />
+          </div>
+          <div class="Contact-Info">
+            <h1>Address</h1>
+            <h2>Karjat,<br />Raigad,<br />Maharashtra</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Contact Section -->
+
+  <!-- Footer -->
+  <section id="Footer">
+    <div class="Footer Contain">
+      <div class="Brand">
+        <h1><span> CRYPTO</span></h1>
+      </div>
+      <h2>Your Complete CRYPTO Solution</h2>
+      <div class="Social-icon">
+        <div class="Social-Item">
+          <a href="https://t.me/CrptoAnalysisPG"><img src="https://img.icons8.com/bubbles/100/000000/sent.png" /></a>
+        </div>
+        <div class="Social-Item">
+          <a href="https://instagram.com/pg.prtgupta"><img
+              src="https://img.icons8.com/bubbles/100/000000/instagram-new.png" /></a>
+        </div>
+      </div>
+      <p>COPYRIGHT © 2022 CRYPTO All Rights Reserved</p>
+    </div>
+  </section>
+  <!-- End Footer -->
+  <script>
+    const Menu = document.querySelector(".Header .Nav-bar .Nav-list .Menu");
+    const Mobile_menu = document.querySelector(
+      ".Header .Nav-bar .Nav-list ul"
+    );
+    const menu_item = document.querySelectorAll(
+      ".Header .Nav-bar .Nav-list ul li a"
+    );
+    const Header = document.querySelector(".Header.Contain");
+
+    Menu.addEventListener("click", () => {
+      Menu.classList.toggle("active");
+      Mobile_menu.classList.toggle("active");
+    });
+
+    document.addEventListener("scroll", () => {
+      var scroll_position = window.scrollY;
+      if (scroll_position > 250) {
+        Header.style.backgroundColor = "#29323c";
+      } else {
+        Header.style.backgroundColor = "transparent";
+      }
+    });
+
+    menu_item.forEach((item) => {
+      item.addEventListener("click", () => {
+        Menu.classList.toggle("active");
+        Mobile_menu.classList.toggle("active");
+      });
+    });
+  </script>
+</body>
+
+</html>
